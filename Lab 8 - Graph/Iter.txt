@@ -1,0 +1,63 @@
+    Note: copy and paste it inside your MatrixGraph class
+    
+    // Iter class. 
+    /** An iterator to the edges.  An Edge iterator is
+     *  similar to an Iterator except that its
+     *  next method will always return an edge
+     */
+    private class Iter implements Iterator<Edge> {
+        // Data fields
+
+        /** The source vertix for this iterator */
+        private int source;
+        /** The current index for this iterator */
+        private int index;
+
+        // Constructor
+        /** Construct an EdgeIterator for a given vertix
+         *  @param source - The source vertix
+         */
+        public Iter(int source) {
+            this.source = source;
+            index = -1;
+            advanceIndex();
+        }
+
+        /** Return true if there are more edges
+         *  @return true if there are more edges
+         */
+        @Override
+        public boolean hasNext() {
+            return index != getNumV();
+        }
+
+        /** Return the next edge if there is one
+         *  @throws NoSuchElementException - there are no
+         *  more edges
+         *  @return the next Edge in the iteration
+         */
+        @Override
+        public Edge next() {
+            if (index == getNumV()) {
+                throw new java.util.NoSuchElementException();
+            }
+            Edge returnValue = new Edge(source, index,
+                    getEdgeValue(source, index));
+            advanceIndex();
+            return returnValue;
+        }
+
+        /** Remove is not implememted
+         *  @throws UnsupportedOperationExeption if called
+         */
+        public void remove() {
+            throw new UnsupportedOperationException();
+        }
+
+        /** Advance the index to the next edge */
+        private void advanceIndex() {
+            do {
+                index++;
+            } while (index != getNumV() && Double.POSITIVE_INFINITY == getEdgeValue(source, index));
+        }
+    }
